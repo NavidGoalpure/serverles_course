@@ -1,0 +1,26 @@
+{
+  "name": "prsls-cdk-jan-2025",
+  "version": "0.1.0",
+  "bin": {
+    "prsls-cdk-jan-2025": "bin/prsls-cdk-jan-2025.js"
+  },
+  "scripts": {
+    "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
+    "cdk": "cdk",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.716.0",
+    "@aws-sdk/credential-providers": "^3.848.0",
+    "@aws-sdk/lib-dynamodb": "^3.716.0",
+    "aws-cdk": "2.173.2",
+    "dotenv": "^16.4.7",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.173.2",
+    "aws4fetch": "^1.0.20",
+    "constructs": "^10.0.0",
+    "mustache": "^4.2.0"
+  }
+}
