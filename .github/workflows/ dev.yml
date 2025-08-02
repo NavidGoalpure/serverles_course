@@ -38,29 +38,30 @@ jobs:
 
       # this provisions a temporary stage called 'dev-ci'
       - name: deploy temp environment
-        run: cdk deploy --all --context stageName=dev-ci --require-approval never
+        run: STAGE_NAME=dev-ci npm run deploy:stage
 
       # this generates the .env file for the 'dev-ci' stage
       - name: export env
-        run: ./export-env.sh ApiStack-dev-ci ap-southeast-2
+        run: STAGE_NAME=dev-ci npm run export:env
 
       # apply seed data to dev-ci stage
       - name: add seed data
-        run: node seed-restaurants.mjs
+        run: STAGE_NAME=dev-ci npm run seed:stage
 
       # this runs the integration test against the 'dev-ci' stage
       # using the .env file that was captured earlier
       - name: run integration test
-        run: npm run test
+        run: STAGE_NAME=dev-ci npm run test:stage
 
       # this runs the end-to-end test against the 'dev-ci' stage
       - name: run end-to-end tests
-        run: npm run test:e2e
+        run: STAGE_NAME=dev-ci npm run test:e2e:stage
 
       # delete the 'dev-ci' stage
       - name: destroy temp environment
-        run: cdk destroy --all --context stageName=dev-ci --force
+        run: STAGE_NAME=dev-ci npm run destroy:stage
 
       # deploy to the ACTUAL dev stage
       - name: deploy to dev
         run: cdk deploy --all --require-approval never
+

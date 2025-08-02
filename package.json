@@ -8,7 +8,13 @@
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
     "test": "cross-env TEST_MODE=handler vitest --testNamePattern \"^(?!.*Given an authenticated user).*When we invoke.*$\"",
-    "test:e2e": "cross-env TEST_MODE=http vitest -t \"Given an authenticated user\""
+    "test:e2e": "cross-env TEST_MODE=http vitest -t \"Given an authenticated user\"",
+    "deploy:stage": "cdk deploy --all --context stageName=$STAGE_NAME --require-approval never",
+    "export:env": "node scripts/export-env.js",
+    "seed:stage": "node scripts/seed-data.js",
+    "test:stage": "cross-env TEST_MODE=handler STAGE_NAME=$STAGE_NAME vitest --testNamePattern \"^(?!.*Given an authenticated user).*When we invoke.*$\"",
+    "test:e2e:stage": "cross-env TEST_MODE=http STAGE_NAME=$STAGE_NAME vitest -t \"Given an authenticated user\"",
+    "destroy:stage": "cdk destroy --all --context stageName=$STAGE_NAME --force"
   },
   "devDependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.859.0",
