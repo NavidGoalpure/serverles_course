@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const cdk = require('aws-cdk-lib')
 const { ApiStack } = require('./constructs/api-stack')
 const { DatabaseStack } = require('./constructs/database-stack')
@@ -18,6 +16,7 @@ const cognitoStack = new CognitoStack(app, `CognitoStack-${stageName}`, { stageN
 new ApiStack(app, `ApiStack-${stageName}`, { 
   stageName,
   restaurantsTable: dbStack.restaurantsTable,
-  cognitoUserPool: cognitoStack.userPool,
+  cognitoUserPool: cognitoStack.cognitoUserPool,
   webUserPoolClient: cognitoStack.webUserPoolClient,
+  serverUserPoolClient: cognitoStack.serverUserPoolClient
 })

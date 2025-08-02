@@ -53,8 +53,7 @@ class CognitoStack extends Stack {
       preventUserExistenceErrors: true
     })
 
-    // Expose resources for other stacks
-    this.userPool = userPool
+    this.cognitoUserPool = userPool
     this.webUserPoolClient = webUserPoolClient
     this.serverUserPoolClient = serverUserPoolClient
   }

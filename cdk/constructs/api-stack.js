@@ -99,6 +99,10 @@ class ApiStack extends Stack {
     new CfnOutput(this, 'ApiUrl', {
       value: api.url
     })
+
+    new CfnOutput(this, 'CognitoServerClientId', {
+      value: props.serverUserPoolClient.userPoolClientId
+    })
   }
 }
 
