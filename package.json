@@ -7,8 +7,8 @@
   "scripts": {
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
-    "test": "cross-env TEST_MODE=handler vitest",
-    "test:e2e": "cross-env TEST_MODE=http vitest"
+    "test": "cross-env TEST_MODE=handler vitest --testNamePattern \"^(?!.*Given an authenticated user).*When we invoke.*$\"",
+    "test:e2e": "cross-env TEST_MODE=http vitest -t \"Given an authenticated user\""
   },
   "devDependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.859.0",

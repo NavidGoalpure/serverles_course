@@ -3,15 +3,25 @@ import * as when from '../steps/when.mjs'
 import * as teardown from '../steps/teardown.mjs'
 import * as given from '../steps/given.mjs'
 
+const mode = process.env.TEST_MODE;
+
 describe('Given an authenticated user', () => {
   let user
 
   beforeAll(async () => {
-    user = await given.an_authenticated_user()
+    // Only create Cognito users for e2e tests (http mode)
+    // For integration tests (handler mode), we don't need any user
+    if (mode === 'http') {
+      user = await given.an_authenticated_user()
+    }
+    // For integration tests, user remains undefined
   })
 
   afterAll(async () => {
-    await teardown.an_authenticated_user(user)
+    // Only delete Cognito users for e2e tests
+    if (mode === 'http') {
+      await teardown.an_authenticated_user(user)
+    }
   })
 
   describe(`When we invoke the POST /restaurants/search endpoint with theme 'cartoon'`, () => {
