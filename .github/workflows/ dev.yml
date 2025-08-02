@@ -30,7 +30,7 @@ jobs:
           role-to-assume: arn:aws:iam::053357668669:role/GitHubActionsRole
           role-session-name: GithubActionsSession
 
-        - name: npm ci
+      - name: npm ci
         run: npm ci
 
       - name: install CDK
