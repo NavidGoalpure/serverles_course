@@ -37,7 +37,7 @@ class CognitoStack extends Stack {
       }      
     })
 
-    new UserPoolClient(this, 'WebUserPoolClient', {
+    const webUserPoolClient = new UserPoolClient(this, 'WebUserPoolClient', {
       userPool,
       authFlows: {
         userSrp: true
@@ -45,13 +45,18 @@ class CognitoStack extends Stack {
       preventUserExistenceErrors: true
     })
 
-    new UserPoolClient(this, 'ServerUserPoolClient', {
+    const serverUserPoolClient = new UserPoolClient(this, 'ServerUserPoolClient', {
       userPool,
       authFlows: {
         adminUserPassword: true
       },
       preventUserExistenceErrors: true
     })
+
+    // Expose resources for other stacks
+    this.userPool = userPool
+    this.webUserPoolClient = webUserPoolClient
+    this.serverUserPoolClient = serverUserPoolClient
   }
 }
 

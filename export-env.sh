@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Ensure AWS CLI is installed
@@ -17,15 +16,16 @@ fi
 
 # Get CloudFormation stack name and region as arguments
 STACK_NAME=$1
-REGION=$2
+REGION=${2:-ap-southeast-2}  # Default to Sydney region
 
-if [ -z "$STACK_NAME" ] || [ -z "$REGION" ]
+if [ -z "$STACK_NAME" ]
 then
-    echo "Usage: $0 <STACK_NAME> <REGION>"
+    echo "Usage: $0 <STACK_NAME> [REGION]"
+    echo "Default region: ap-southeast-2 (Sydney)"
     exit 1
 fi
 
-echo "Running..."
+echo "Running with region: $REGION"
 
 # Create or overwrite .env file
 > .env
@@ -50,4 +50,15 @@ do
     done
 done
 
-echo ".env file has been created/updated with environment variables from Lambda functions."
+# Iterate through the outputs of the CloudFormation stack
+for OUTPUT_KEY in $(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$REGION" | jq -r '.Stacks[0].Outputs[].OutputKey')
+do
+    OUTPUT_VALUE=$(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$REGION" | jq -r --arg OUTPUT_KEY "$OUTPUT_KEY" '.Stacks[0].Outputs[] | select(.OutputKey==$OUTPUT_KEY) .OutputValue')
+    
+    # Check if the key already exists in the .env file
+    if ! grep -q "^$OUTPUT_KEY=" .env; then
+        echo "$OUTPUT_KEY=$OUTPUT_VALUE" >> .env
+    fi
+done
+
+echo ".env file has been created/updated with environment variables from Lambda functions and CloudFormation stack outputs."

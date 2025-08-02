@@ -7,7 +7,7 @@
   "scripts": {
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
-    "test": "vitest"
+    "test": "cross-env TEST_MODE=handler vitest"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.716.0",
