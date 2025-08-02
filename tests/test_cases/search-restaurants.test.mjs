@@ -18,7 +18,7 @@ describe('Given an authenticated user', () => {
   })
 
   afterAll(async () => {
-    // Only delete Cognito users for e2e tests
+    // Only delete Cognito users for e2e tests  
     if (mode === 'http') {
       await teardown.an_authenticated_user(user)
     }
