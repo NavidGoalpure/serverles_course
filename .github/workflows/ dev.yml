@@ -18,7 +18,7 @@ jobs:
       contents: write
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-outs your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -46,7 +46,7 @@ jobs:
 
       # apply seed data to dev-ci stage
       - name: add seed data
-        run: node seed-restaurants.js
+        run: node seed-restaurants.mjs
 
       # this runs the integration test against the 'dev-ci' stage
       # using the .env file that was captured earlier
