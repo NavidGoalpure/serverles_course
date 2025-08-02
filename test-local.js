@@ -14,7 +14,7 @@ const mockEvent = {
 const mockContext = {
   functionName: 'test-function',
   functionVersion: '1',
-  invokedFunctionArn: 'arn:aws:lambda:us-east-1:123456789012:function:test-function',
+  invokedFunctionArn: 'arn:aws:lambda:ap-southeast-2:123456789012:function:test-function',
   memoryLimitInMB: '128',
   awsRequestId: 'test-request-id',
   logGroupName: '/aws/lambda/test-function',
